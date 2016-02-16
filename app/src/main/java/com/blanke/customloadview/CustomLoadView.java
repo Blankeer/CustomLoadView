@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 /**
@@ -92,15 +93,19 @@ public class CustomLoadView extends ProgressBar {
             temp = (float) (r * (30 - k) * 1.0 / 10);
 //            canvas.drawRect(oX - mStrokeWidth * 0.5F, oY - mStrokeWidth * 0.5F - (r - temp), oX + mStrokeWidth * 0.5F, oY + mStrokeWidth * 0.5F - (r - temp), mPreLinePaint);
             canvas.drawCircle(oX, oY - (r - temp), mStrokeWidth * 0.5F, mPreLinePaint);
-        } else if (k <= 95) {
+        } else if (k <= 100) {
 //            canvas.drawLine(oX - t, oY, oX + t, oY, mPreLinePaint);
-            temp = (float) (360 * (1 - (100 - k) * 1.0 / 70));
+            temp = (float) (360 * (1 - (95 - k) * 1.0 / 65));
             canvas.drawArc(oX - r, oY - r, oX + r, oY + r, 270, temp, false, mCirclePaint);
-            float temp2 = (float) ((k % t) * 2 - t);
-            canvas.drawLine(oX - t, oY, oX, oY + temp2, mPreLinePaint);
-            canvas.drawLine(oX + t, oY, oX, oY + temp2, mPreLinePaint);
-        } else {
-
+            float temp2 = (float) (t * (1 - (95 - k) * 1.0 / 65));
+            if (k < 95) {
+                canvas.drawLine(oX - t, oY, oX, oY + temp2, mPreLinePaint);
+                canvas.drawLine(oX + t, oY, oX, oY + temp2, mPreLinePaint);
+            } else {
+                temp = (float) (t * 0.5 * (1 - (100 - k) * 1.0 / 5));
+                canvas.drawLine(oX - t, oY, oX, oY + t, mPreLinePaint);
+                canvas.drawLine(oX + t + temp, oY - temp, oX, oY + t, mPreLinePaint);
+            }
         }
     }
 }
